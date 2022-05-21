@@ -1,11 +1,29 @@
 #include "list.h"
+#include <iostream>
+using namespace std;
 
-List::List()
+Node::Node(int data, Node* nextNode)
 {
-    size = 0;
+    this->value = data;
+    this->next = nextNode;
+}
+Node::Node(int data)
+{
+    this->value = data;
+	this->next = nullptr;
+}
+Node::Node()
+{
+	this->next = nullptr;
 }
 
-List::~List()
+list::list()
+{
+    size = 0;
+	head = nullptr;
+}
+
+list::~list()
 {
 	if(size == 0)
 	{
@@ -21,7 +39,7 @@ List::~List()
 	delete tail;
 }
 
-void List::pushBack(int data)
+void list::pushBack(int data)
 {
 	if(size == 0)
 	{
@@ -38,7 +56,7 @@ void List::pushBack(int data)
 	size += 1;
 }
 
-void List::printList()
+void list::printList()
 {
 	if(size == 0)
 	{
@@ -56,7 +74,7 @@ void List::printList()
 	cout << "\n";
 }
 
-Node* List::pop()
+Node* list::pop()
 {
 	if(size == 0)
 	{
@@ -69,7 +87,7 @@ Node* List::pop()
 	return ans;
 }
 
-Node* List::popBack()
+Node* list::popBack()
 {
 	if(size == 0)
 	{
@@ -85,14 +103,14 @@ Node* List::popBack()
 	return tail;
 }
 
-bool List::isEmpty()
+bool list::isEmpty()
 {
 	if(size == 0)
 		return 1;
 	return 0;
 }
 
-Node* List::search(int k)
+Node* list::search(int k)
 {
 	if(size == 0)
 	{
@@ -113,7 +131,7 @@ Node* List::search(int k)
 	return tail;
 }
 
-void List::push(int data)
+void list::push(int data)
 {
 	if(size == 0)
 	{
@@ -126,12 +144,42 @@ void List::push(int data)
 	size += 1;
 }
 
+list& list::operator=(const list& right)
+{
+	if(size == 0)
+	{
+		this->size = right.size;
+		this->head = right.head;
+		return *this;
+	}
+	if((this->size == right.size) && (this->head == right.head))
+	{
+		return *this;
+	}
+	this->size = right.size;
+	this->head = right.head;
+	return *this;
+}
+
+void list::setHead(Node* newHead)
+{
+	head = newHead;
+}
+
+list::list(const list& s)
+{
+	this->size = s.size;
+	this->head = new Node(s.head->value, s.head->next);
+}
+
 int main()
 {
-	List list = List();
-	list.push(2);
-	list.push(3);
-	list.printList();
-	list.~List();
+	list l1 = list();
+	l1.push(2);
+	l1.push(3);
+	list l2(l1);
+	l1.printList();
+	l1.~list();
+	l2.~list();
 	return 0;
 }
