@@ -26,13 +26,15 @@ public:
     ~List();
     Node* pop();
     void printList();
+    void push(int data);
     void pushBack(int data);
     Node* popBack();
     Node* search(int k);
     int getSize(){return size;}
     Node* getHead(){return head;}
+    bool isEmpty();
+    void setHead(Node* newHead){head = newHead;}
 private:
-
     int size;
     Node* head = nullptr;
 };
